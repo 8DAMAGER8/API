@@ -13,8 +13,8 @@
 
 ### Информация для заказчиков
 
-- `Хост: https://e1fb-87-117-56-112.ngrok-free.app`
-- `Ключ: SgxBppyXQi`
+- `Хост: https://bed5-87-117-52-7.ngrok-free.app`
+- `Ключ: BFVqAWdPnM('remember_token' User Id '1')`
 
 ### Примеры запросов
 

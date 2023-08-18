@@ -15,7 +15,6 @@ class Sale extends Model
     protected $fillable = [
         'title',
         'income',
-        'date_from',
-        'date_to'
+        'date',
     ];
 }

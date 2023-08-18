@@ -15,6 +15,6 @@ class Stock extends Model
     protected $fillable = [
         'title',
         'income',
-        'date_from'
+        'date'
     ];
 }
