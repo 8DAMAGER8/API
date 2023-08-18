@@ -9,12 +9,5 @@ class Stock extends Model
 {
     use HasFactory;
 
-    /**
-     * @var string[]
-     */
-    protected $fillable = [
-        'title',
-        'income',
-        'date'
-    ];
+    protected $guarded = false;
 }

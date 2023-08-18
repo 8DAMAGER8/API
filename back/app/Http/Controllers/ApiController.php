@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\DBRepository;
+use App\Http\Repositories\DBRepository;
 use App\Services\API;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -12,8 +12,8 @@ class ApiController extends Controller
 {
     private $api;
 
-    const MAX_LIMIT = 10;
-    const ERROR_LIMIT = 'The limit must not be greater than 10.';
+    const MAX_LIMIT = 500;
+    const ERROR_LIMIT = 'The limit must not be greater than 500.';
     const DATE_ERROR = 'The date must be a date today.';
     const DATE_FORM = 'Y-m-d';
     /**

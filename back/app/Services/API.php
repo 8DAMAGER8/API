@@ -2,35 +2,18 @@
 
 namespace App\Services;
 
+use App\Http\Repositories\DBRepository;
 use App\Models\Income;
 use App\Models\Order;
-use App\Models\Result;
 use App\Models\Sale;
 use App\Models\Stock;
-use App\Models\User;
-use App\Repositories\DBRepository;
 
 class API
 {
     /**
      * limit results
      */
-    const DEFAULT_LIMIT = 10;
-
-    /**
-     * @var Sale
-     */
-    private $sale;
-
-    /**
-     * @var Order
-     */
-    private $order;
-
-    /**
-     * @var Income
-     */
-    private $income;
+    const DEFAULT_LIMIT = 500;
 
     /**
      * @var DBRepository
@@ -38,25 +21,25 @@ class API
     private $DBRepository;
 
     /**
-     *
+     * @var ApiClient
      */
+    private $apiClient;
+
     public function __construct()
     {
-        $this->sale = (new Sale());
-        $this->order = (new Order());
-        $this->income = (new Income());
         $this->DBRepository = (new DBRepository());
+        $this->apiClient = (new ApiClient());
     }
     /**
      * @param object $request
      * @return object|Stock[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function getStosksInDateFrom($request): object
+    public function getStosksInDateFrom($request)
     {
-        $tableName = 'Stock';
-        $limit = $this->addDefaultLimit($request->limit);
-        $results = $this->DBRepository->getStocksFromDB($request, $limit);
-        $this->DBRepository->createResults($results, $tableName);
+        $table = 'stocks';
+        $results = $this->apiClient->poiSearch($request, $table);
+
+        $this->DBRepository->createStock($results);
 
         return $results;
     }
@@ -65,13 +48,12 @@ class API
      * @param object $request
      * @return object
      */
-    public function getSalesInDate($request): object
+    public function getSalesInDate($request)
     {
-        $tableName = 'Sale';
-        $tableModel = $this->sale;
-        $limit = $this->addDefaultLimit($request->limit);
-        $results = $this->DBRepository->getNotStocksFromDB($request, $limit, $tableModel);
-        $this->DBRepository->createResults($results, $tableName);
+        $table = 'sales';
+        $results = $this->apiClient->poiSearch($request, $table);
+
+        $this->DBRepository->createSale($results);
 
         return $results;
     }
@@ -80,13 +62,12 @@ class API
      * @param object $request
      * @return object
      */
-    public function getOrdersInDate($request): object
+    public function getOrdersInDate($request)
     {
-        $tableName = 'Order';
-        $tableModel = $this->order;
-        $limit = $this->addDefaultLimit($request->limit);
-        $results = $this->DBRepository->getNotStocksFromDB($request, $limit, $tableModel);
-        $this->DBRepository->createResults($results, $tableName);
+        $table = 'orders';
+        $results = $this->apiClient->poiSearch($request, $table);
+
+        $this->DBRepository->createOrder($results);
 
         return $results;
     }
@@ -95,13 +76,12 @@ class API
      * @param object $request
      * @return object
      */
-    public function getIncomesInDate($request): object
+    public function getIncomesInDate($request)
     {
-        $tableName = 'Income';
-        $tableModel = $this->income;
-        $limit = $this->addDefaultLimit($request->limit);
-        $results = $this->DBRepository->getNotStocksFromDB($request, $limit, $tableModel);
-        $this->DBRepository->createResults($results, $tableName);
+        $table = 'incomes';
+        $results = $this->apiClient->poiSearch($request, $table);
+
+        $this->DBRepository->createIncome($results);
 
         return $results;
     }

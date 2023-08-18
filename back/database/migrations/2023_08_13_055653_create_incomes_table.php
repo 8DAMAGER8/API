@@ -15,10 +15,19 @@ class CreateIncomesTable extends Migration
     {
         Schema::create('incomes', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->integer('income');
+            $table->Biginteger('income_id');
+            $table->string('number');
             $table->date('date');
             $table->timestamps();
+            $table->string('supplier_article');
+            $table->string('tech_size');
+            $table->string('barcode');
+            $table->integer('quantity');
+            $table->integer('total_price');
+            $table->date('date_close');
+            $table->string('warehouse_name');
+            $table->Biginteger('nm_id');
+            $table->string('status');
         });
     }
 
